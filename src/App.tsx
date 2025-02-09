@@ -9,7 +9,7 @@ export default function App() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        🚀 Teamable - 대학생 팀플을 위한 최고의 협업 플랫폼
+        🚀 Teamitaka - 대학생 팀플을 위한 최고의 협업 플랫폼
       </motion.h1>
 
       <motion.p
