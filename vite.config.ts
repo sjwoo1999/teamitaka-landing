@@ -7,7 +7,8 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: "autoUpdate",
+      registerType: "autoUpdate", // 자동 업데이트 활성화
+      includeAssets: ['favicon.ico', 'robots.txt', 'icons/icon-192x192.png', 'icons/icon-512x512.png'],
       devOptions: {
         enabled: true, // 개발 모드에서도 서비스 워커 활성화
       },
