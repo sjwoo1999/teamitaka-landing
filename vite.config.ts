@@ -12,6 +12,10 @@ export default defineConfig({
       devOptions: {
         enabled: true, // 개발 모드에서도 서비스 워커 활성화
       },
+      workbox: {
+        cleanupOutdatedCaches: true, // 이전 캐시 정리
+        navigateFallback: "/index.html", // PWA에서 SPA 지원
+      },
       manifest: {
         name: "Teamitaka Landing",
         short_name: "Teamitaka",
