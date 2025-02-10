@@ -26,7 +26,7 @@ if ("serviceWorker" in navigator) {
       }
 
       // 기존 서비스 워커를 제거하지 않고 유지
-      const registration = await navigator.serviceWorker.register("/service-worker.js", { scope: "/" });
+      const registration = await navigator.serviceWorker.register("/sw.js", { scope: "/" });
       console.log("✅ Service Worker registered with scope:", registration.scope);
 
       // 새로운 서비스 워커 업데이트 감지
