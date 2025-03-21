@@ -1,79 +1,94 @@
-import { motion } from "framer-motion";
-import "./App.css"; // 스타일 적용을 위해 추가
+import { useEffect, useRef } from "react";
+import * as THREE from "three";
+import { FontLoader } from "three/examples/jsm/loaders/FontLoader";
+import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-export default function App() {
+function App() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (!canvasRef.current) return;
+
+    // 장면, 카메라, 렌더러 설정
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0xffffff); // 흰색 배경
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 0, 100); // 카메라 위치 설정
+    const renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvasRef.current });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // OrbitControls로 마우스 인터랙션 추가
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+
+    // 폰트 로드 및 3D 텍스트 생성
+    const fontLoader = new FontLoader();
+    fontLoader.load(
+      "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/fonts/optimer_bold.typeface.json",
+      (font) => {
+        const textGeometry = new TextGeometry("Teamitaka", {
+          font: font,
+          size: 80,          // 텍스트 크기
+          height: 20,        // 두께
+          curveSegments: 24, // 곡선 세분화
+          bevelEnabled: true, // 경사 효과 활성화
+          bevelThickness: 2,  // 경사 두께
+          bevelSize: 1.5,     // 경사 크기
+          bevelSegments: 10,  // 경사 세분화
+        });
+
+        const textMaterial = new THREE.MeshPhongMaterial({
+          color: 0xf76241,    // 텍스트 색상 (주황색)
+          specular: 0xffffff, // 반사광 색상
+          shininess: 50,      // 광택 정도
+        });
+        const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+
+        // 텍스트를 화면 중앙에 배치
+        textGeometry.computeBoundingBox();
+        const boundingBox = textGeometry.boundingBox!;
+        const center = boundingBox.getCenter(new THREE.Vector3());
+        textMesh.position.set(-center.x, -center.y, 0);
+        scene.add(textMesh);
+
+        // 조명 추가
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6); // 주변광
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.9); // 방향성 조명
+        directionalLight.position.set(50, 100, 75);
+        scene.add(directionalLight);
+      }
+    );
+
+    // 애니메이션 루프
+    const animate = () => {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    // 창 크기 조정 시 반응형 처리
+    const handleResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    };
+    window.addEventListener("resize", handleResize);
+
+    // 클린업
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <div className="h-auto min-h-screen flex flex-col items-center bg-gray-50 px-4 sm:px-6 md:px-12 pt-20 sm:pt-32">
-      {/* 제목과 설명 */}
-      <div className="w-full max-w-xl sm:max-w-2xl md:max-w-6xl mx-auto text-center">
-        <motion.h1
-          className="text-2xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4"
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          🚀 Teamitaka - 대학생 팀플을 위한 최고의 협업 플랫폼
-        </motion.h1>
-
-        <motion.p
-          className="text-sm sm:text-lg text-gray-700 text-center max-w-3xl mx-auto mb-10 px-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          대학 생활 중 팀 프로젝트를 효과적으로 관리하고, 최고의 팀워크를 경험하세요!
-        </motion.p>
-      </div>
-
-      {/* 기능 카드 */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-lg sm:max-w-3xl mx-auto">
-        {features.map((feature, index) => (
-          <motion.div
-            key={index}
-            className="p-6 bg-white rounded-2xl shadow-lg flex flex-col items-center text-center hover:shadow-xl transition-all w-full"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-          >
-            <span className="text-3xl sm:text-4xl">{feature.icon}</span>
-            <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mt-4">{feature.title}</h3>
-            <p className="text-gray-600 mt-2 text-sm sm:text-base">{feature.description}</p>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* 버튼 */}
-      <div className="flex justify-center w-full mt-12 mb-10">
-        <motion.button
-          className="bg-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold shadow-lg hover:bg-blue-700 hover:scale-105 transition-all w-full sm:w-auto"
-          whileHover={{ scale: 1.1 }}
-        >
-          지금 시작하기 🚀
-        </motion.button>
-      </div>
+    <div className="w-full h-screen">
+      <canvas ref={canvasRef} className="w-full h-full" />
     </div>
   );
 }
 
-const features = [
-  {
-    icon: "🔸",
-    title: "나의 팀플 타입 테스트",
-    description: "나의 협업 스타일과 강한 능력을 테스트로 알아보기!",
-  },
-  {
-    icon: "🔹",
-    title: "업무 분담과 진행 상황 공유",
-    description: "프로젝트를 체계적으로 관리하여 효율성을 높이세요.",
-  },
-  {
-    icon: "🔺",
-    title: "상호 평가 폼",
-    description: "프로젝트 완료 후 협업 능력을 점검하고 피드백 받기!",
-  },
-  {
-    icon: "⚡",
-    title: "인재 매칭 서비스",
-    description: "새로운 프로젝트에서 필요한 팀원을 쉽게 찾을 수 있어요!",
-  },
-];
+export default App;
