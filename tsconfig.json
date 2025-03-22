@@ -6,6 +6,10 @@
   ],
   "compilerOptions": {
     "lib": ["ESNext", "DOM", "WebWorker"],
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    "typeRoots": ["node_modules/@types", "src/types"],
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
   }
 }
