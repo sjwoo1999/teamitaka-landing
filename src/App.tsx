@@ -35,7 +35,7 @@ function App() {
     const fontLoader = new FontLoader();
     fontLoader.load(
       "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/fonts/optimer_bold.typeface.json",
-      (font: THREE.Font) => {
+      (font) => {
         const textGeometry = new TextGeometry("Teamitaka", {
           font: font,
           size: 80,
