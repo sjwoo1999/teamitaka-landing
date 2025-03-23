@@ -31,7 +31,7 @@ function App() {
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
 
-    // 폰트 로드 및 3D 텍스트 생성
+    // 폰트 로드 및 3D 텍스트 생성 //
     const fontLoader = new FontLoader();
     fontLoader.load(
       "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/fonts/optimer_bold.typeface.json",
