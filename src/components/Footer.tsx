@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white pt-12 pb-10 px-6 rounded-t-3xl shadow-inner">
+    <footer className="bg-gray-800 text-white pt-12 pb-10 px-4 sm:px-6 lg:px-10 rounded-t-3xl shadow-inner">
       <div className="max-w-screen-xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <div>
           <h2 className="text-xl font-bold mb-4 text-brand">TEAMITAKA</h2>
