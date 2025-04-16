@@ -12,9 +12,11 @@
   "dependencies": {
     "@types/three": "^0.174.0",
     "framer-motion": "^12.4.1",
+    "gsap": "^3.12.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.5.0",
+    "split-type": "^0.3.4",
     "three": "^0.174.0"
   },
   "devDependencies": {
