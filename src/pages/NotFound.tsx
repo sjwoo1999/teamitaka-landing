@@ -14,7 +14,7 @@ const NotFound = () => {
     if (!pRef.current || !handleRef.current) return;
 
     // Split the text into chars
-    const split = new SplitType(pRef.current, {
+    /*const split = */new SplitType(pRef.current, {
       types: "chars",
       tagName: "span",
     });
