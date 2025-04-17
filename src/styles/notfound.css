@@ -31,3 +31,46 @@
   top: 0;
   left: 0;
 }
+
+.home-button {
+  margin-top: 2rem;
+  background: transparent;
+  border: 1.5px solid #f76241;
+  color: #f76241;
+  font-family: 'Roboto Mono', monospace;
+  font-size: 1rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.5px;
+
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* ✅ hover 시 흰색 border로 고정 */
+.home-button:hover {
+  background-color: #ffffff;
+  color: #f76241;
+
+  border-color: #fff !important;
+  border-top-color: #fff !important;
+  border-right-color: #fff !important;
+  border-bottom-color: #fff !important;
+  border-left-color: #fff !important;
+}
+
+/* ✅ 포커스/액티브 상태도 완벽히 제거 */
+.home-button:focus,
+.home-button:focus-visible,
+.home-button:active {
+  outline: none !important;
+  box-shadow: none !important;
+
+  border-color: #fff !important;
+  border-top-color: #fff !important;
+  border-right-color: #fff !important;
+  border-bottom-color: #fff !important;
+  border-left-color: #fff !important;
+}

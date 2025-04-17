@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import SplitType from "split-type";
 import "../styles/notfound.css";
@@ -89,11 +90,16 @@ const NotFound = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const navigate = useNavigate();
+
   return (
     <div className="notfound-container">
       <div className="notfound-inner">
         <p ref={pRef}>{baseText}</p>
         <span className="handle" ref={handleRef}></span>
+        <button className="home-button" onClick={() => navigate("/")}>
+          <span>홈으로 이동</span>
+        </button>
       </div>
     </div>
   );
